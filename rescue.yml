@@ -1,0 +1,59 @@
+---
+name: build/rescue
+mmdebstrap:
+  suite: bullseye
+  target: root.squashfs
+  architectures: [amd64]
+  components: [main, contrib, non-free]
+
+  setup-hooks:
+    - copy-in rootfs/ /
+    - chown root:root -R "$1"/rootfs
+    - cp -r "$1"/rootfs/* "$1"/
+    - rm -r "$1"/rootfs
+
+  cleanup-hooks:
+    - if test -f "$1/etc/resolv.conf"; then cp /dev/null "$1/etc/resolv.conf"; fi
+
+  customize-hooks:
+    - chmod 700 "$1/root/.ssh"
+    - cp --preserve=timestamps -v "$1"/boot/vmlinu* "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz"
+    - cp --preserve=timestamps -v "$1"/boot/initrd.img* "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+
+  keyrings:
+    - /usr/share/keyrings/debian-archive-keyring.gpg
+
+  packages:
+    # live boot environment
+    - live-boot
+    - live-config
+    - live-config-systemd
+
+    # kernel + modules + firmware
+    - linux-image-amd64
+    - linux-headers-amd64
+    - firmware-linux
+    - zfs-dkms
+    - zfsutils-linux
+
+    # ssh
+    - openssh-client
+    - openssh-server
+    - openssh-sftp-server
+
+    # tools
+    - bash-completion
+    - curl
+    - debootstrap
+    - dmidecode
+    - dnsutils
+    - dosfstools
+    - gdisk
+    - htop
+    - less
+    - lshw
+    - lvm2
+    - mtr-tiny
+    - ubuntu-keyring
+    - vim
+    - wget
