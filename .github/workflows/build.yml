@@ -1,0 +1,22 @@
+# vim: ft=yaml
+name: build
+
+on:
+  push:
+  schedule:
+    - cron: "0 0 1 * *"
+  pull_request:
+
+jobs:
+  rescue:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install --yes --quiet bdebstrap squashfs-tools-ng
+      - run: bdebstrap -c rescue.yml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: rescue
+          path: build/rescue/*
+          if-no-files-found: error
