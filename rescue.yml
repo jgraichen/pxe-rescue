@@ -1,6 +1,7 @@
 ---
 name: build/rescue
 mmdebstrap:
+  mode: unshare
   suite: bullseye
   target: root.squashfs
   architectures: [amd64]
