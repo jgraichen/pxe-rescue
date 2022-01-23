@@ -13,7 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/bdebstrap
+      - run: >-
+          sudo apt-get install --quiet --yes
+            python3-ruamel.yaml
+            squashfs-tools-ng
+            mmdebstrap
+      - run: |
+          wget https://raw.githubusercontent.com/bdrung/bdebstrap/v0.4.0/bdebstrap -O bdebstrap
+          chmod +x bdebstrap
+      - run: |
+          ./bdebstrap --force --config rescue.yml
       - uses: actions/upload-artifact@v2
         with:
           name: rescue
