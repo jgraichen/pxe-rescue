@@ -2,7 +2,7 @@
 
 set -x
 
-sudo apt-get install --quiet --yes python3-ruamel.yaml squashfs-tools-ng mmdebstrap
+sudo apt-get install --quiet --yes python3-ruamel.yaml squashfs-tools-ng mmdebstrap debian-archive-keyring
 
 mkdir bin/
 wget -O bin/bdebstrap https://raw.githubusercontent.com/bdrung/bdebstrap/v0.4.0/bdebstrap
