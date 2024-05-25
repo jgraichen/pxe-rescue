@@ -1,11 +1,10 @@
 ---
 name: build/rescue
 mmdebstrap:
-  mode: unshare
-  suite: bullseye
+  suite: bookworm
   target: root.squashfs
   architectures: [amd64]
-  components: [main, contrib, non-free]
+  components: [main, contrib, non-free-firmware, non-free]
 
   setup-hooks:
     - copy-in rootfs/ /
@@ -44,17 +43,38 @@ mmdebstrap:
 
     # tools
     - bash-completion
+    - bsdextrautils
     - curl
+    - debian-archive-keyring
     - debootstrap
     - dmidecode
     - dnsutils
     - dosfstools
+    - ethtool
     - gdisk
+    - git
+    - glances
+    - hdparm
     - htop
+    - hwinfo
+    - ipmitool
+    - kpartx
     - less
     - lshw
+    - lsof
+    - lsscsi
     - lvm2
+    - man-db
     - mtr-tiny
+    - nano
+    - ndisc6
+    - net-tools
+    - numactl
+    - nvme-cli
+    - parted
+    - pciutils
+    - rsync
+    - tree
     - ubuntu-keyring
     - vim
     - wget

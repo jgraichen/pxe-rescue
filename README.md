@@ -1,6 +1,6 @@
 # PXE rescue
 
-Debian 11 image with ZFS modules preinstalled, build as squashfs image for PXE boot.
+Debian 12 image with ZFS modules preinstalled, build as squashfs image for PXE boot.
 
 ## Usage
 
