@@ -28,6 +28,6 @@ jobs:
       - run: make build/${{ matrix.target }}/root.squashfs
       - uses: actions/upload-artifact@v4
         with:
-          name: rescue
+          name: ${{ matrix.target }}
           path: build/${{ matrix.target }}/*
           if-no-files-found: error
