@@ -27,6 +27,9 @@ mmdebstrap:
     - $BDEBSTRAP_HOOKS/disable-units "$1" apt-daily.timer
     - $BDEBSTRAP_HOOKS/enable-units "$1" systemd-timesyncd
 
+    # ubuntu-keyring is not in bookworm
+    - chroot "$1" sh -c 'apt-get --yes update && apt-get --yes install ubuntu-keyring/sid'
+
   keyrings:
     - /usr/share/keyrings/debian-archive-keyring.gpg
 
@@ -82,6 +85,5 @@ mmdebstrap:
     - pciutils
     - rsync
     - tree
-    - ubuntu-keyring
     - vim
     - wget
