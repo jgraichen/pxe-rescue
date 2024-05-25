@@ -18,9 +18,8 @@ mmdebstrap:
     - if test -f "$1/etc/resolv.conf"; then cp /dev/null "$1/etc/resolv.conf"; fi
 
   customize-hooks:
-    - chmod 700 "$1/root/.ssh"
-    - cp --preserve=timestamps -v "$1"/boot/vmlinu* "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz"
-    - cp --preserve=timestamps -v "$1"/boot/initrd.img* "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+    - cp --preserve=timestamps -v "$1"/boot/vmlinuz-* "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz"
+    - cp --preserve=timestamps -v "$1"/boot/initrd.img-* "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
     - chmod 644 "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz" "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
 
     # Configure not-needed / needed services
