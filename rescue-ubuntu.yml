@@ -1,0 +1,88 @@
+---
+name: build/rescue-ubuntu
+mmdebstrap:
+  suite: noble
+  target: root.squashfs
+  architectures: [amd64]
+  components: [main, restricted, universe]
+
+  essential-hooks:
+    # Install all customized files.
+    - sync-in rootfs/ubuntu/ /
+    - chroot "$1" chown root:root -R /root
+
+    # Ensure SSH homedir has correct permissions
+    - chmod 700 "$1/root/.ssh"
+
+  cleanup-hooks:
+    - if test -f "$1/etc/resolv.conf"; then cp /dev/null "$1/etc/resolv.conf"; fi
+
+  customize-hooks:
+    - chmod 700 "$1/root/.ssh"
+    - cp --preserve=timestamps -v "$1"/boot/vmlinu* "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz"
+    - cp --preserve=timestamps -v "$1"/boot/initrd.img* "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+    - chmod 644 "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz" "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+
+    # Configure not-needed / needed services
+    - $BDEBSTRAP_HOOKS/disable-units "$1" apt-daily.timer
+    - $BDEBSTRAP_HOOKS/enable-units "$1" systemd-timesyncd
+
+  keyrings:
+    - /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+  packages:
+    # live boot environment
+    - live-boot
+    - live-config
+    - live-config-systemd
+
+    # kernel + modules + firmware
+    - linux-generic
+    - linux-firmware
+    - zfsutils-linux
+
+    # ssh
+    - openssh-client
+    - openssh-server
+    - openssh-sftp-server
+
+    # MOTD
+    - landscape-common
+
+    # tools
+    - bash-completion
+    - bsdextrautils
+    - curl
+    - debian-archive-keyring
+    - debootstrap
+    - dmidecode
+    - dnsutils
+    - dosfstools
+    - ethtool
+    - gdisk
+    - git
+    - glances
+    - hdparm
+    - htop
+    - hwinfo
+    - ipmitool
+    - kpartx
+    - less
+    - lshw
+    - lsof
+    - lsscsi
+    - lvm2
+    - man-db
+    - mtr-tiny
+    - nano
+    - ndisc6
+    - net-tools
+    - numactl
+    - nvme-cli
+    - parted
+    - pciutils
+    - rsync
+    - tree
+    - ubuntu-keyring
+    - vim
+    - wget

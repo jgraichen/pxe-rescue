@@ -1,16 +1,18 @@
 ---
-name: build/rescue
+name: build/rescue-debian
 mmdebstrap:
   suite: bookworm
   target: root.squashfs
   architectures: [amd64]
   components: [main, contrib, non-free-firmware, non-free]
 
-  setup-hooks:
-    - copy-in rootfs/ /
-    - chown root:root -R "$1"/rootfs
-    - cp -r "$1"/rootfs/* "$1"/
-    - rm -r "$1"/rootfs
+  essential-hooks:
+    # Install all customized files.
+    - sync-in rootfs/debian/ /
+    - chroot "$1" chown root:root -R /root
+
+    # Ensure SSH homedir has correct permissions
+    - chmod 700 "$1/root/.ssh"
 
   cleanup-hooks:
     - if test -f "$1/etc/resolv.conf"; then cp /dev/null "$1/etc/resolv.conf"; fi
@@ -19,6 +21,11 @@ mmdebstrap:
     - chmod 700 "$1/root/.ssh"
     - cp --preserve=timestamps -v "$1"/boot/vmlinu* "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz"
     - cp --preserve=timestamps -v "$1"/boot/initrd.img* "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+    - chmod 644 "$1${BDEBSTRAP_OUTPUT_DIR?}/vmlinuz" "$1${BDEBSTRAP_OUTPUT_DIR?}/initrd.img"
+
+    # Configure not-needed / needed services
+    - $BDEBSTRAP_HOOKS/disable-units "$1" apt-daily.timer
+    - $BDEBSTRAP_HOOKS/enable-units "$1" systemd-timesyncd
 
   keyrings:
     - /usr/share/keyrings/debian-archive-keyring.gpg

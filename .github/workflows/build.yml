@@ -15,7 +15,8 @@ jobs:
     strategy:
       matrix:
         target:
-          - rescue
+          - rescue-debian
+          - rescue-ubuntu
 
     steps:
       - uses: actions/checkout@v4
