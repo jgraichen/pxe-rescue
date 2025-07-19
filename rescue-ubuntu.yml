@@ -72,6 +72,7 @@ mmdebstrap:
     - lsscsi
     - lvm2
     - man-db
+    - mbuffer
     - mtr-tiny
     - nano
     - ndisc6
@@ -80,7 +81,9 @@ mmdebstrap:
     - nvme-cli
     - parted
     - pciutils
+    - pv
     - rsync
+    - sanoid
     - tree
     - ubuntu-keyring
     - vim
