@@ -51,6 +51,7 @@ mmdebstrap:
     # tools
     - bash-completion
     - bsdextrautils
+    - cryptsetup
     - curl
     - debian-archive-keyring
     - debootstrap
