@@ -86,6 +86,7 @@ mmdebstrap:
     - pv
     - rsync
     - sanoid
+    - smartmontools
     - tree
     - vim
     - wget

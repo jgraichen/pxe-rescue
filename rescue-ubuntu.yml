@@ -84,6 +84,7 @@ mmdebstrap:
     - pv
     - rsync
     - sanoid
+    - smartmontools
     - tree
     - ubuntu-keyring
     - vim
