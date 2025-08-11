@@ -20,7 +20,7 @@ jobs:
           - rescue-ubuntu
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: >
           sudo apt-get install --quiet --yes
           bdebstrap
