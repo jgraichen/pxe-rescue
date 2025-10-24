@@ -27,7 +27,7 @@ jobs:
           debian-archive-keyring
           squashfs-tools-ng
       - run: make build/${{ matrix.target }}/root.squashfs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.target }}
           path: build/${{ matrix.target }}/*
