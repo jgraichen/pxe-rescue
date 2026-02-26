@@ -1,7 +1,7 @@
 ---
 name: build/rescue-debian
 mmdebstrap:
-  suite: bookworm
+  suite: trixie
   target: root.squashfs
   architectures: [amd64]
   components: [main, contrib, non-free-firmware, non-free]
