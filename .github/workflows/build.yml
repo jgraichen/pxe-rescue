@@ -20,17 +20,32 @@ jobs:
           - rescue-ubuntu
 
     steps:
-      - uses: actions/checkout@v7
-      - run: >
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        run: >
           sudo apt-get install --quiet --yes
           bdebstrap
           debian-archive-keyring
           squashfs-tools-ng
-      - run: make build/${{ matrix.target }}/root.squashfs
-      - uses: actions/upload-artifact@v7
+          grub-pc-bin
+          grub-efi-amd64-bin
+          xorriso
+          mtools
+      - name: Build root.squashfs
+        run: make build/${{ matrix.target }}/root.squashfs
+      - name: Build ISO
+        run: make build/${{ matrix.target }}.iso
+      - name: Upload netboot archive
+        uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.target }}
-          path: |
-            build/${{ matrix.target }}/*
-            build/${{ matrix.target }}.iso
+          name: ${{ matrix.target }}-netboot.zip
+          path: build/${{ matrix.target }}/*
           if-no-files-found: error
+      - name: Upload ISO image
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.target }}.iso
+          path: build/${{ matrix.target }}.iso
+          if-no-files-found: error
+          archive: false
