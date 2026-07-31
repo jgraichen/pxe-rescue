@@ -58,6 +58,7 @@ mmdebstrap:
     - dmidecode
     - dnsutils
     - dosfstools
+    - efibootmgr
     - ethtool
     - gdisk
     - git
