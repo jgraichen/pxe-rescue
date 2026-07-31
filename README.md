@@ -3,7 +3,7 @@
 PXE-bootable rescue images with ZFS and useful tools preinstalled.
 
 * Debian 13 trixie
-* Ubuntu 24.04 noble
+* Ubuntu 26.04 noble
 
 ## Usage
 
